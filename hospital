@@ -51,13 +51,11 @@ perguntaEstadoDoPaciente :-
 	write('"baixa" para dar baixa'), nl,
 	read, nl.
 
-examinar(N):-
-	perguntarNome(N)
-
+examinar:-
+	perguntarNome.
 
 processa(Escolha) :-
-
-	Escolha==adicionar -> addAnimal,menu;
+	Escolha==cadastrar -> cadastrar,menu;
 	Escolha==adicionarfilo -> addClasse,menu;
 	Escolha==pesquisar -> consultar,menu;
 	Escolha==sair -> sair.
@@ -66,6 +64,10 @@ processa(Escolha) :-
 sair :-
         write('Bye!').
 
+cadastrar :-
+	write('entrou no cadastro'),nl,nl.
+
+%ler :-
 /*
 insereClasse(Nome, Exame, Circugia, Classe):-
 
