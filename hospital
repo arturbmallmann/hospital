@@ -33,6 +33,7 @@ data do exame
 menu :-
 	write('----   Operações    ----'),nl,nl,
 	write('"listar" para listar todos os pacientes'), nl,
+	write('"consultar" para encontrar um paciente pelo nome'), nl,
 	write('"cadastrar" para cadastrar um paciente'), nl,
 	write('"examinar" para examinar um paciente'), nl,
 	write('"cirurgia" para realizar uma cirurgia'), nl,
@@ -41,7 +42,16 @@ menu :-
 	read(Escolha),
 	processa(Escolha).
 
-perguntarNome :-
+processa(Escolha) :-
+	Escolha==cadastrar -> cadastra,menu;
+	Escolha==consultar -> consulta,menu;
+	Escolha==listar -> lista,menu;
+	Escolha==sair -> sai.
+
+
+:-menu. %chama o menu principal pela primeira vez
+
+perguntarNome(Nome) :-%usado tanto no cadastro quanto na consulta, !!resolver problema do ponto!!
 	write('Qual o nome do paciente?'), nl,
 	read(N), nl.
 
@@ -52,20 +62,30 @@ perguntaEstadoDoPaciente :-
 	read, nl.
 
 examinar:-
-	perguntarNome.
-
-processa(Escolha) :-
-	Escolha==cadastrar -> cadastrar,menu;
-	Escolha==adicionarfilo -> addClasse,menu;
-	Escolha==pesquisar -> consultar,menu;
-	Escolha==sair -> sair.
+	perguntarNome(Nome).
 
 
-sair :-
+sai :-
         write('Bye!').
 
-cadastrar :-
-	write('entrou no cadastro'),nl,nl.
+cadastra :-
+	write('entrou no cadastro'),nl,
+	perguntarNome(Nome).
+	
+entranome(Nome) :- 
+	write('nome do paciente'),
+	read(Nome).
+/*
+consultar :-
+	nl,
+	perguntarNome(Paciente).
+	write('  '), nl,
+	read(Paciente),
+	findall(P,paciente(Paciente, P), R), !,
+	consultaPaciente(Paciente,R).
+*/
+%listar :-
+	
 
 %ler :-
 /*
@@ -116,15 +136,6 @@ addClasse(Pele,Hab,Alim,Leite,Resp,Npatas, Classe) :-
 	listing(classe),
 	told.
 
-
-consultar :-
-
-	nl,
-	perguntarNome(Paciente).
-	write('  '), nl,
-	read(Paciente),
-	findall(P,paciente(Paciente, P), R), !,
-	consultaPaciente(Paciente,R).
 
 
 primeiro([P|_],P).
