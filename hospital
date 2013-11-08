@@ -1,0 +1,126 @@
+Elaborar um programa em prolog para controle de atividades em um hospital.
+
+O programa deve controlar altas e baixas de pacientes, exames realizados, diagnósticos, procedimentos cirúrgicos e médicos que realizaram todas as atividades (alta, baixa, diagnóstico, exames, cirurgias, etc).
+
+O programa deve ter uma interface de usuário em modo texto, baseada em menus, que permita consultas e cadastros no sistema.
+
+As entradas de dados dos usuários devem ser feitas sem a necessidade de o usuário inserir o ponto final em cada interação.
+
+O sistema deve fazer uso de arquivos para que possa preservar os dados inseridos, isto é, ao entrar no programa, o sistema consulta o arquivo de dados e todas as alterações devem ser gravadas no arquivo para uso posterior, se o usuário sair e entrar do programa.
+
+
+1. Cadastro de Pacientes
+
+# Médico realiza #
+1. Marcar Exame
+2. Dar baixa/alta
+3. Dar diagnóstico.
+4. Realizar Procedimento Cirurgico
+
+# Paciente #
+Nome
+status (baixa/alta)
+data do exame
+1 medico.examina('nome do paciente').
+2 medico.diagnostica('estado de saúde').
+3 medico.realizaCirurgia('nnome do paciente', PERNA).
+4 medico.daAlta('nome do paciente').
+5 medico.daBaixa('nome do paciente').
+
+
+
+menu :- write('----   Operações    ----'),nl,nl,
+	write('"listar" para listar todos os pacientes'), nl,
+	write('"cadastrar" para cadastrar um paciente'), nl,
+	write('"examinar" para examinar um paciente'), nl,
+	write('"cirurgia" para realizar uma cirurgia'), nl,
+	write('"sair" para Sair'), nl,
+	write('  '), nl,
+	read(Escolha),
+	processa(Escolha).
+
+perguntarNome(N):-
+	write('Qual o nome do paciente?'), nl,
+	read(N), nl.
+
+perguntaEstadoDoPaciente(N):-
+	write('Qual é estado do paciente?'), nl,
+	write('"alta" para dar alta'), nl,
+	write('"baixa" para dar baixa'), nl,
+	read(N), nl.
+
+examinar(N):-
+	perguntarNome(N)
+
+
+processa(Escolha) :-
+
+	Escolha==adicionar -> addAnimal,menu;
+	Escolha==adicionarfilo -> addClasse,menu;
+	Escolha==pesquisar -> consultar,menu;
+	Escolha==sair -> sair.
+
+
+sair :-
+        write('Bye!').
+
+
+insereClasse(Nome, Exame, Circugia, Classe):-
+
+	write('Nao foi encontrada nenhum Paciente!!'),
+        write('Deseja cria-lo?'), nl,
+        read(Escolha),!,
+	Escolha == 'sim' -> addClasse(Nome, Exame, Circugia, Classe);
+	Escolha == 'nao' -> fail.
+
+
+addClasse :-
+        write('Digite o nome do Filo:'), nl,
+	read(Classe),
+	perguntaTipoPele(Pele),
+	perguntaTipoHabitat(Hab),
+	perguntaAlimentacao(Alim),
+	perguntaLeite(Leite),
+	perguntaTipoRespiracao(Resp),
+	perguntaNPatas(Npatas),
+	assert(classe(Classe,Pele,Hab,Alim,Leite,Resp,Npatas)),
+	tell('arquivos.pl'),
+	listing(tipoPele),
+	listing(tipoHabitat),
+	listing(alimentacao),
+	listing(leite),
+	listing(tipoRespiracao),
+	listing(nPatas),
+	listing(classe),
+	listing(animal),
+	told,
+	sucessoClasse.
+
+addClasse(Pele,Hab,Alim,Leite,Resp,Npatas, Classe) :-
+
+	write('Digite o nome do Filo:'), nl,
+	write('  '), nl,
+	read(Classe),
+	assert(classe(Classe,Pele,Hab,Alim,Leite,Resp,Npatas)),
+	tell('arquivos.pl'),
+	listing(tipoPele),
+	listing(tipoHabitat),
+	listing(alimentacao),
+	listing(leite),
+	listing(tipoRespiracao),
+	listing(nPatas),
+	listing(classe),
+	told.
+
+
+consultar :-
+
+	nl,
+	perguntarNome(Paciente).
+	write('  '), nl,
+	read(Paciente),
+	findall(P,paciente(Paciente, P), R), !,
+	consultaPaciente(Paciente,R).
+
+
+primeiro([P|_],P).
