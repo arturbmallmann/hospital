@@ -1,3 +1,4 @@
+/*
 Elaborar um programa em prolog para controle de atividades em um hospital.
 
 O programa deve controlar altas e baixas de pacientes, exames realizados, diagnósticos, procedimentos cirúrgicos e médicos que realizaram todas as atividades (alta, baixa, diagnóstico, exames, cirurgias, etc).
@@ -11,7 +12,7 @@ O sistema deve fazer uso de arquivos para que possa preservar os dados inseridos
 
 1. Cadastro de Pacientes
 
-# Médico realiza #
+Médico realiza #
 1. Marcar Exame
 2. Dar baixa/alta
 3. Dar diagnóstico.
@@ -28,8 +29,9 @@ data do exame
 5 medico.daBaixa('nome do paciente').
 
 
-
-menu :- write('----   Operações    ----'),nl,nl,
+*/
+menu :-
+	write('----   Operações    ----'),nl,nl,
 	write('"listar" para listar todos os pacientes'), nl,
 	write('"cadastrar" para cadastrar um paciente'), nl,
 	write('"examinar" para examinar um paciente'), nl,
@@ -39,15 +41,15 @@ menu :- write('----   Operações    ----'),nl,nl,
 	read(Escolha),
 	processa(Escolha).
 
-perguntarNome(N):-
+perguntarNome :-
 	write('Qual o nome do paciente?'), nl,
 	read(N), nl.
 
-perguntaEstadoDoPaciente(N):-
+perguntaEstadoDoPaciente :-
 	write('Qual é estado do paciente?'), nl,
 	write('"alta" para dar alta'), nl,
 	write('"baixa" para dar baixa'), nl,
-	read(N), nl.
+	read, nl.
 
 examinar(N):-
 	perguntarNome(N)
@@ -64,7 +66,7 @@ processa(Escolha) :-
 sair :-
         write('Bye!').
 
-
+/*
 insereClasse(Nome, Exame, Circugia, Classe):-
 
 	write('Nao foi encontrada nenhum Paciente!!'),
@@ -76,7 +78,7 @@ insereClasse(Nome, Exame, Circugia, Classe):-
 
 addClasse :-
         write('Digite o nome do Filo:'), nl,
-	read(Classe),
+read(Classe),
 	perguntaTipoPele(Pele),
 	perguntaTipoHabitat(Hab),
 	perguntaAlimentacao(Alim),
@@ -124,3 +126,4 @@ consultar :-
 
 
 primeiro([P|_],P).
+*/
