@@ -1,0 +1,23 @@
+:- dynamic nome/2.
+
+nome(_, _).
+
+:- dynamic idade/2.
+
+idade(_, 20).
+
+:- dynamic data_do_exame/2.
+
+data_do_exame(_, 15/12/10).
+
+:- dynamic tipo_da_consulta/2.
+
+tipo_da_consulta(_, rotina).
+
+:- dynamic estado/2.
+
+estado(_, x).
+
+:- dynamic diagnostico/2.
+
+diagnostico(_, false).

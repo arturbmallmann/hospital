@@ -4,6 +4,58 @@ carregar:-
 	nl, write('Base de dados carregada com sucesso!'), nl, nl.
 
 
+
+
+
+perguntar_nome :-%usado tanto no cadastro quanto na consulta, !!resolver problema do ponto!!
+	write('Qual o nome do paciente?'), nl.
+perguntar_idade :- 	
+	write('Qual a idade do paciente?'), nl.
+perguntar_data_do_exame :-
+	write('Qual a data do exame? Ex: 25/12/2013'), nl.
+perguntar_tipo_da_consulta :-
+	write('Qual o tipo da consulta? (rotina ou circurgia)'), nl.
+
+examinar:-
+	perguntar_nome.
+
+
+sair :-
+     write('Bye!').
+
+listar_pacientes :-
+	tell(dados).
+
+insere_nome(PACIENTE,NOME):- assert(nome(PACIENTE,NOME)).
+insere_idade(PACIENTE,IDADE):- assert(idade(PACIENTE,IDADE)).
+insere_data_do_exame(PACIENTE, DATA_DO_EXAME) :- assert(data_do_exame(PACIENTE,DATA_DO_EXAME)).
+insere_tipo_da_consulta(PACIENTE,TIPO_DA_CONSULTA):- assert(tipo_da_consulta(PACIENTE,TIPO_DA_CONSULTA)).
+insere_estado(PACIENTE, ESTADO) :- assert(estado(PACIENTE,ESTADO)).
+insere_diagnostico(PACIENTE,DIAGNOSTICO) :- assert(diagnostico(PACIENTE,DIAGNOSTICO)).
+
+cadastrar_paciente :-
+	perguntar_nome,
+	read(NOME),
+	perguntar_idade, read(IDADE),
+	perguntar_data_do_exame,
+	read(DATA_DO_EXAME),
+	perguntar_tipo_da_consulta,
+	read(TIPO_DA_CONSULTA),
+	insere_nome(PACIENTE, NOME),
+	insere_idade(PACIENTE, IDADE),
+	insere_data_do_exame(PACIENTE, DATA_DO_EXAME),
+	insere_tipo_da_consulta(PACIENTE, TIPO_DA_CONSULTA),
+	insere_estado(PACIENTE,'x'),
+	insere_diagnostico(PACIENTE,'false'),
+	tell('dados'),
+	listing(NOME),
+	listing(IDADE),
+	listing(DATA_DO_EXAME),
+	listing(TIPO_DA_CONSULTA),
+	listing(ESTADO),
+	listing(DIAGNOSTICO),
+	told.
+
 menu :-
 	carregar,
     write('----   Operações    ----'),nl,nl,
@@ -25,39 +77,3 @@ processa(Escolha) :-
 
 
 :-menu. %chama o menu principal pela primeira vez
-
-
-perguntar_nome :-%usado tanto no cadastro quanto na consulta, !!resolver problema do ponto!!
-	write('Qual o nome do paciente?'), nl.
-perguntar_idade :- 	
-	write('Qual a idade do paciente?'), nl.
-perguntar_data_do_exame :-
-	write('Qual a data do exame? Ex: 25/12/2013'), nl.
-perguntar_tipo_da_consulta :-
-	write('Qual o tipo da consulta? (rotina ou circurgia)'), nl.
-
-examinar:-
-	perguntar_nome(Nome).
-
-
-sair :-
-     write('Bye!').
-
-cadastrar_paciente :-
-	perguntar_nome, read(NOME),
-	perguntar_idade, read(IDADE),
-	perguntar_data_do_exame, read(DATA_DO_EXAME),
-	perguntar_tipo_da_consulta, read(TIPO_DA_CONSULTA),
-	open(dados, append, BD),
-	write(BD, 'nome('), write(BD, NOME), write(BD, '),'), % nome('nome')
-	write(BD,'idade('), write(BD,IDADE), write(BD,'),'), %  idade('idade')
-	write(BD,'data_do_exame('), write(BD,DATA_DO_EXAME), write(BD,'),'), %  data_do_exame('data_do_exame')
-	write(BD,'tipo_da_consulta('), write(BD,TIPO_DA_CONSULTA), write(BD,'),'), %  tipo_da_consulta('tipo_da_consulta')
-	write(BD, 'estado('), write(BD, 'x'), write(BD, '),'), % estado('x') : Estado inicial do paciente sempre será x (x,baixa,alta)
-	write(BD, 'diagnosticado('), write(BD,'false'), write(BD,').\n'), % diagnosticado('false')
-	close(BD).
-
-listar_pacientes :-
-	tell(dados).
-
-
