@@ -5,7 +5,9 @@ Trabalho de Paradigmas da Programação.
 
 ## Integrantes ##
 [Artur Mallmann](https://github.com/arturbmallmann "Artur Mallmann GitHub")
+
 [Lucas Tonussi](https://github.com/tonussi "Lucas Tonussi GitHub")
+
 [Thiago Rose](https://github.com/thisenrose "Thiago Rose GitHub")
 
 ## O que fazer ##

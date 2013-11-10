@@ -1,37 +1,5 @@
-/*
-Elaborar um programa em prolog para controle de atividades em um hospital.
-
-O programa deve controlar altas e baixas de pacientes, exames realizados, diagnósticos, procedimentos cirúrgicos e médicos que realizaram todas as atividades (alta, baixa, diagnóstico, exames, cirurgias, etc).
-
-O programa deve ter uma interface de usuário em modo texto, baseada em menus, que permita consultas e cadastros no sistema.
-
-As entradas de dados dos usuários devem ser feitas sem a necessidade de o usuário inserir o ponto final em cada interação.
-
-O sistema deve fazer uso de arquivos para que possa preservar os dados inseridos, isto é, ao entrar no programa, o sistema consulta o arquivo de dados e todas as alterações devem ser gravadas no arquivo para uso posterior, se o usuário sair e entrar do programa.
-
-
-1. Cadastro de Pacientes
-
-Médico realiza #
-1. Marcar Exame
-2. Dar baixa/alta
-3. Dar diagnóstico.
-4. Realizar Procedimento Cirurgico
-
-# Paciente #
-Nome
-status (baixa/alta)
-data do exame
-1 medico.examina('nome do paciente').
-2 medico.diagnostica('estado de saúde').
-3 medico.realizaCirurgia('nnome do paciente', PERNA).
-4 medico.daAlta('nome do paciente').
-5 medico.daBaixa('nome do paciente').
-
-
-*/
-menu :-
-	write('----   Operações    ----'),nl,nl,
+menu :- 
+    write('----   Operações    ----'),nl,nl,
 	write('"listar" para listar todos os pacientes'), nl,
 	write('"consultar" para encontrar um paciente pelo nome'), nl,
 	write('"cadastrar" para cadastrar um paciente'), nl,
@@ -43,7 +11,7 @@ menu :-
 	processa(Escolha).
 
 processa(Escolha) :-
-	Escolha==cadastrar -> cadastra,menu;
+	Escolha==cadastrar -> cadastrar_paciente,menu;
 	Escolha==consultar -> consulta,menu;
 	Escolha==listar -> lista,menu;
 	Escolha==sair -> sai.
@@ -51,92 +19,35 @@ processa(Escolha) :-
 
 :-menu. %chama o menu principal pela primeira vez
 
-perguntarNome(Nome) :-%usado tanto no cadastro quanto na consulta, !!resolver problema do ponto!!
-	write('Qual o nome do paciente?'), nl,
-	read(N), nl.
 
-perguntaEstadoDoPaciente :-
-	write('Qual é estado do paciente?'), nl,
-	write('"alta" para dar alta'), nl,
-	write('"baixa" para dar baixa'), nl,
-	read, nl.
+perguntar_nome :-%usado tanto no cadastro quanto na consulta, !!resolver problema do ponto!!
+	write('Qual o nome do paciente?'), nl.
+perguntar_idade :- 	
+	write('Qual a idade do paciente?'), nl.
+perguntar_data_do_exame :-
+	write('Qual a data do exame? Ex: 25/12/2013'), nl.
+perguntar_tipo_da_consulta :-
+	write('Qual o tipo da consulta? (rotina ou circurgia)'), nl.
 
 examinar:-
-	perguntarNome(Nome).
+	perguntar_nome(Nome).
 
 
-sai :-
-        write('Bye!').
+sair :-
+     write('Bye!').
 
-cadastra :-
-	write('entrou no cadastro'),nl,
-	perguntarNome(Nome).
-	
-entranome(Nome) :- 
-	write('nome do paciente'),
-	read(Nome).
-/*
-consultar :-
-	nl,
-	perguntarNome(Paciente).
-	write('  '), nl,
-	read(Paciente),
-	findall(P,paciente(Paciente, P), R), !,
-	consultaPaciente(Paciente,R).
-*/
-%listar :-
-	
-
-%ler :-
-/*
-insereClasse(Nome, Exame, Circugia, Classe):-
-
-	write('Nao foi encontrada nenhum Paciente!!'),
-        write('Deseja cria-lo?'), nl,
-        read(Escolha),!,
-	Escolha == 'sim' -> addClasse(Nome, Exame, Circugia, Classe);
-	Escolha == 'nao' -> fail.
+cadastrar_paciente :-
+	perguntar_nome, read(NOME),
+	perguntar_idade, read(IDADE),
+	perguntar_data_do_exame, read(DATA_DO_EXAME),
+	perguntar_tipo_da_consulta, read(TIPO_DA_CONSULTA),
+	open(dados, append, BD),
+	write(BD, 'nome('), write(BD, NOME), write(BD, '),'), % nome('nome')
+	write(BD,'idade('), write(BD,IDADE), write(BD,'),'), %  idade('idade')
+	write(BD,'data_do_exame('), write(BD,DATA_DO_EXAME), write(BD,'),'), %  data_do_exame('data_do_exame')
+	write(BD,'tipo_da_consulta('), write(BD,TIPO_DA_CONSULTA), write(BD,'),'), %  tipo_da_consulta('tipo_da_consulta')
+	write(BD, 'estado('), write(BD, 'x'), write(BD, '),'), % estado('x') : Estado inicial do paciente sempre será x (x,baixa,alta)
+	write(BD, 'diagnosticado('), write(BD,'false'), write(BD,').\n'), % diagnosticado('false')
+	close(BD).
 
 
-addClasse :-
-        write('Digite o nome do Filo:'), nl,
-read(Classe),
-	perguntaTipoPele(Pele),
-	perguntaTipoHabitat(Hab),
-	perguntaAlimentacao(Alim),
-	perguntaLeite(Leite),
-	perguntaTipoRespiracao(Resp),
-	perguntaNPatas(Npatas),
-	assert(classe(Classe,Pele,Hab,Alim,Leite,Resp,Npatas)),
-	tell('arquivos.pl'),
-	listing(tipoPele),
-	listing(tipoHabitat),
-	listing(alimentacao),
-	listing(leite),
-	listing(tipoRespiracao),
-	listing(nPatas),
-	listing(classe),
-	listing(animal),
-	told,
-	sucessoClasse.
-
-addClasse(Pele,Hab,Alim,Leite,Resp,Npatas, Classe) :-
-
-	write('Digite o nome do Filo:'), nl,
-	write('  '), nl,
-	read(Classe),
-	assert(classe(Classe,Pele,Hab,Alim,Leite,Resp,Npatas)),
-	tell('arquivos.pl'),
-	listing(tipoPele),
-	listing(tipoHabitat),
-	listing(alimentacao),
-	listing(leite),
-	listing(tipoRespiracao),
-	listing(nPatas),
-	listing(classe),
-	told.
-
-
-
-primeiro([P|_],P).
-*/

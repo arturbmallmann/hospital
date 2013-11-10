@@ -1,0 +1,18 @@
+
+1. Cadastro de Pacientes
+
+Médico realiza #
+1. Marcar Exame
+2. Dar baixa/alta
+3. Dar diagnóstico.
+4. Realizar Procedimento Cirurgico
+
+# Paciente #
+Nome
+status (baixa/alta)
+data do exame
+1 medico.examina('nome do paciente').
+2 medico.diagnostica('estado de saúde').
+3 medico.realizaCirurgia('nnome do paciente', PERNA).
+4 medico.daAlta('nome do paciente').
+5 medico.daBaixa('nome do paciente').
