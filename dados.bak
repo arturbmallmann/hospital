@@ -21,3 +21,7 @@
 :- dynamic diagnostico/2.
 
 %diagnostico(_, false).
+
+:- dynamic cirurgia/2.
+
+%cirurgia(_, false).

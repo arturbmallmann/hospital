@@ -54,6 +54,17 @@ insere_diagnostico(PACIENTE,DIAGNOSTICO) :- assert(diagnostico(PACIENTE,DIAGNOST
 insere_cirurgia(PACIENTE,FEITA) :- assert(cirurgia(PACIENTE,FEITA)).
 exclui_cirurgia(PACIENTE) :- retract(cirurgia(PACIENTE,_)).
 
+atualiza :-
+	tell('dados'),
+	listing(nome),
+	listing(idade),
+	listing(data_do_exame),
+	listing(tipo_da_consulta),
+	listing(estado),
+	listing(diagnostico),
+	listing(cirurgia),
+	told.
+
 cadastrar_paciente :-
 	perguntar_nome,
 	ler(PACIENTE),
@@ -70,15 +81,7 @@ cadastrar_paciente :-
 	insere_estado(PACIENTE,'x'),
 	insere_diagnostico(PACIENTE,'false'),
 	insere_cirurgia(PACIENTE,'false'),
-	tell('dados'),
-	listing(nome),
-	listing(idade),
-	listing(data_do_exame),
-	listing(tipo_da_consulta),
-	listing(estado),
-	listing(diagnostico),
-	listing(cirurgia),
-	told.
+	atualiza.
 
 consulta :-
 	perguntar_nome,
@@ -89,8 +92,8 @@ fazer_cirurgia :-
 	perguntar_nome,
 	ler(NOME),
 	exclui_cirurgia(NOME),
-	insere_cirurgia(NOME,'true').
-
+	insere_cirurgia(NOME,'true'),
+	atualiza.
 
 menu :-
 	carregar,
