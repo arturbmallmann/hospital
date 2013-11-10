@@ -1,4 +1,11 @@
-menu :- 
+carregar:-
+	open(dados, append, BD), write(BD,''),close(BD),
+	['dados'],
+	nl, write('Base de dados carregada com sucesso!'), nl, nl.
+
+
+menu :-
+	carregar,
     write('----   Operações    ----'),nl,nl,
 	write('"listar" para listar todos os pacientes'), nl,
 	write('"consultar" para encontrar um paciente pelo nome'), nl,
@@ -49,5 +56,8 @@ cadastrar_paciente :-
 	write(BD, 'estado('), write(BD, 'x'), write(BD, '),'), % estado('x') : Estado inicial do paciente sempre será x (x,baixa,alta)
 	write(BD, 'diagnosticado('), write(BD,'false'), write(BD,').\n'), % diagnosticado('false')
 	close(BD).
+
+listar_pacientes :-
+	tell(dados).
 
 
