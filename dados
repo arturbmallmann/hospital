@@ -23,7 +23,7 @@ estado(artur, x).
 
 :- dynamic diagnostico/2.
 
-diagnostico(artur, false).
+diagnostico(artur, true).
 
 :- dynamic cirurgia/2.
 

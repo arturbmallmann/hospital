@@ -53,6 +53,7 @@ insere_estado(PACIENTE, ESTADO) :- assert(estado(PACIENTE,ESTADO)).
 insere_diagnostico(PACIENTE,DIAGNOSTICO) :- assert(diagnostico(PACIENTE,DIAGNOSTICO)).
 insere_cirurgia(PACIENTE,FEITA) :- assert(cirurgia(PACIENTE,FEITA)).
 exclui_cirurgia(PACIENTE) :- retract(cirurgia(PACIENTE,_)).
+exclui_diagnostico(PACIENTE) :- retract(diagnostico(PACIENTE,_)).
 
 atualiza :-
 	tell('dados'),
@@ -95,6 +96,14 @@ fazer_cirurgia :-
 	insere_cirurgia(NOME,'true'),
 	atualiza.
 
+fazer_diagnostivo :-
+	perguntar_nome,
+	ler(NOME),
+	exclui_diagnostico(NOME),
+	insere_diagnostico(NOME,'true'),
+	atualiza.
+
+
 menu :-
 	carregar,
 	write('----   Operações    ----'),nl,nl,
@@ -113,6 +122,7 @@ processa(Escolha) :-
 	Escolha==consultar -> consulta,menu;
 	Escolha==listar -> listar_pacientes,menu;
 	Escolha==cirurgia -> fazer_cirurgia,menu;
+	Escolha==examinar -> fazer_diagnostivo,menu;
 	Escolha==sair -> sai.
 
 

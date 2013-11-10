@@ -1,27 +1,31 @@
 :- dynamic nome/1.
 
-%nome(_).
+
+:- dynamic nome/2.
+
+nome(artur, artur).
 
 :- dynamic idade/2.
 
-%idade(_, 20).
+idade(artur, 22).
 
 :- dynamic data_do_exame/2.
 
-%data_do_exame(_, 15/12/10).
+data_do_exame(artur, 2222222).
 
 :- dynamic tipo_da_consulta/2.
 
-%tipo_da_consulta(_, rotina).
+tipo_da_consulta(artur, rotina).
 
 :- dynamic estado/2.
 
-%estado(_, x).
+estado(artur, x).
 
 :- dynamic diagnostico/2.
 
-%diagnostico(_, false).
+diagnostico(artur, false).
 
 :- dynamic cirurgia/2.
 
-%cirurgia(_, false).
+cirurgia(artur, true).
+
