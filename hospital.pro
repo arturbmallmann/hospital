@@ -25,7 +25,8 @@ examinar:-
 sai :-
      write('Bye!').
 
-listar_pacientes :- findall(Ex,nome(NOME,NOME),S).
+listar_pacientes :- findall(Ex,nome(NOME,Ex),S),
+	write(S).
 
 procura(Paciente) :-
 
