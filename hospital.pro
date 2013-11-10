@@ -26,7 +26,7 @@ sair :-
 listar_pacientes :-
 	tell(dados).
 
-insere_nome(PACIENTE,NOME):- assert(nome(PACIENTE,NOME)).
+insere_nome(PACIENTE):- assert(nome(PACIENTE)).
 insere_idade(PACIENTE,IDADE):- assert(idade(PACIENTE,IDADE)).
 insere_data_do_exame(PACIENTE, DATA_DO_EXAME) :- assert(data_do_exame(PACIENTE,DATA_DO_EXAME)).
 insere_tipo_da_consulta(PACIENTE,TIPO_DA_CONSULTA):- assert(tipo_da_consulta(PACIENTE,TIPO_DA_CONSULTA)).
@@ -35,30 +35,30 @@ insere_diagnostico(PACIENTE,DIAGNOSTICO) :- assert(diagnostico(PACIENTE,DIAGNOST
 
 cadastrar_paciente :-
 	perguntar_nome,
-	read(NOME),
+	read(PACIENTE),
 	perguntar_idade, read(IDADE),
 	perguntar_data_do_exame,
 	read(DATA_DO_EXAME),
 	perguntar_tipo_da_consulta,
 	read(TIPO_DA_CONSULTA),
-	insere_nome(PACIENTE, NOME),
+	insere_nome(PACIENTE),
 	insere_idade(PACIENTE, IDADE),
 	insere_data_do_exame(PACIENTE, DATA_DO_EXAME),
 	insere_tipo_da_consulta(PACIENTE, TIPO_DA_CONSULTA),
 	insere_estado(PACIENTE,'x'),
 	insere_diagnostico(PACIENTE,'false'),
 	tell('dados'),
-	listing(NOME),
-	listing(IDADE),
-	listing(DATA_DO_EXAME),
-	listing(TIPO_DA_CONSULTA),
-	listing(ESTADO),
-	listing(DIAGNOSTICO),
+	listing(nome),
+	listing(idade),
+	listing(data_do_exame),
+	listing(tipo_da_consulta),
+	listing(estado),
+	listing(diagnostico),
 	told.
 
 menu :-
 	carregar,
-    write('----   Operações    ----'),nl,nl,
+	write('----   Operações    ----'),nl,nl,
 	write('"listar" para listar todos os pacientes'), nl,
 	write('"consultar" para encontrar um paciente pelo nome'), nl,
 	write('"cadastrar" para cadastrar um paciente'), nl,
@@ -72,7 +72,7 @@ menu :-
 processa(Escolha) :-
 	Escolha==cadastrar -> cadastrar_paciente,menu;
 	Escolha==consultar -> consulta,menu;
-	Escolha==listar -> lista,menu;
+	Escolha==listar -> listar_pacientes,menu;
 	Escolha==sair -> sai.
 
 
