@@ -25,7 +25,7 @@ examinar:-
 sai :-
      write('Bye!').
 
-listar_pacientes :- findall(Ex,nome(NOME,Ex),S),
+listar_pacientes :- findall(Ex,nome(_,Ex),S),
 	write(S).
 
 procura(Paciente) :-
@@ -36,12 +36,14 @@ procura(Paciente) :-
 	findall(Ex,tipo_da_consulta(Paciente,Ex),T),!,
 	findall(Ex,estado(Paciente,Ex),E),!,
 	findall(Ex,diagnostico(Paciente,Ex),Di),!,
+	findall(Ex,cirurgia(Paciente,Ex),C),!,
 	write('nome: '), write(N),nl,
 	write('idade: '), write(I),nl,
 	write('data do exame: '),write(Da),nl,
 	write('tipo da consulta: '),write(T),nl,
 	write('estado: '),write(E),nl,
-	write('diagnostico: '),write(Di),nl.
+	write('diagnostico: '),write(Di),nl,
+	write('cirurgia: '),write(C),nl.
 
 insere_nome(PACIENTE):- assert(nome(PACIENTE,PACIENTE)).
 insere_idade(PACIENTE,IDADE):- assert(idade(PACIENTE,IDADE)).
@@ -49,6 +51,8 @@ insere_data_do_exame(PACIENTE, DATA_DO_EXAME) :- assert(data_do_exame(PACIENTE,D
 insere_tipo_da_consulta(PACIENTE,TIPO_DA_CONSULTA):- assert(tipo_da_consulta(PACIENTE,TIPO_DA_CONSULTA)).
 insere_estado(PACIENTE, ESTADO) :- assert(estado(PACIENTE,ESTADO)).
 insere_diagnostico(PACIENTE,DIAGNOSTICO) :- assert(diagnostico(PACIENTE,DIAGNOSTICO)).
+insere_cirurgia(PACIENTE,FEITA) :- assert(cirurgia(PACIENTE,FEITA)).
+exclui_cirurgia(PACIENTE) :- retract(cirurgia(PACIENTE,_)).
 
 cadastrar_paciente :-
 	perguntar_nome,
@@ -65,6 +69,7 @@ cadastrar_paciente :-
 	insere_tipo_da_consulta(PACIENTE, TIPO_DA_CONSULTA),
 	insere_estado(PACIENTE,'x'),
 	insere_diagnostico(PACIENTE,'false'),
+	insere_cirurgia(PACIENTE,'false'),
 	tell('dados'),
 	listing(nome),
 	listing(idade),
@@ -72,12 +77,20 @@ cadastrar_paciente :-
 	listing(tipo_da_consulta),
 	listing(estado),
 	listing(diagnostico),
+	listing(cirurgia),
 	told.
 
 consulta :-
 	perguntar_nome,
 	ler(NOME),
 	procura(NOME).
+
+fazer_cirurgia :-
+	perguntar_nome,
+	ler(NOME),
+	exclui_cirurgia(NOME),
+	insere_cirurgia(NOME,'true').
+
 
 menu :-
 	carregar,
@@ -96,6 +109,7 @@ processa(Escolha) :-
 	Escolha==cadastrar -> cadastrar_paciente,menu;
 	Escolha==consultar -> consulta,menu;
 	Escolha==listar -> listar_pacientes,menu;
+	Escolha==cirurgia -> fazer_cirurgia,menu;
 	Escolha==sair -> sai.
 
 

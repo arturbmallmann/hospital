@@ -28,3 +28,7 @@ estado(thiago, x).
 diagnostico(artur, false).
 diagnostico(thiago, false).
 
+:- dynamic cirurgia/2.
+
+cirurgia(artur,false).
+cirurgia(thiago,false).
