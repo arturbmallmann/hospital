@@ -22,12 +22,26 @@ examinar:-
 	perguntar_nome.
 
 
-sair :-
+sai :-
      write('Bye!').
 
 listar_pacientes :- findall(Ex,nome(NOME,NOME),S).
 
-procura(Paciente) :- findall(Ex,exame(Paciente,Ex),S).
+procura(Paciente) :-
+
+	findall(Ex,nome(Paciente,Ex),N),!,
+	findall(Ex,idade(Paciente,Ex),I),!,
+	findall(Ex,data_do_exame(Paciente,Ex),Da),!,
+	findall(Ex,tipo_da_consulta(Paciente,Ex),T),!,
+	findall(Ex,estado(Paciente,Ex),E),!,
+	findall(Ex,diagnostico(Paciente,Ex),Di),!,
+	write('nome: '), write(N),nl,
+	write('idade: '), write(I),nl,
+	write('data do exame: '),write(Da),nl,
+	write('tipo da consulta: '),write(T),nl,
+	write('estado: '),write(E),nl,
+	write('diagnostico: '),write(Di),nl.
+
 insere_nome(PACIENTE):- assert(nome(PACIENTE,PACIENTE)).
 insere_idade(PACIENTE,IDADE):- assert(idade(PACIENTE,IDADE)).
 insere_data_do_exame(PACIENTE, DATA_DO_EXAME) :- assert(data_do_exame(PACIENTE,DATA_DO_EXAME)).
