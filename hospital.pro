@@ -3,7 +3,9 @@ carregar:-
 	['dados'],
 	nl, write('Base de dados carregada com sucesso!'), nl, nl.
 
-
+ler(Word) :- get0(Car), ler_resto(Car, List),name(Word, List), !.
+ler_resto(10, []).
+ler_resto(Car, [Car|Resto]) :- get0(Car2), ler_resto(Car2, Resto).
 
 
 
@@ -24,9 +26,9 @@ sair :-
      write('Bye!').
 
 listar_pacientes :-
-	tell(dados).
+	nome(X).
 
-insere_nome(PACIENTE):- assert(nome(PACIENTE)).
+insere_nome(PACIENTE):- assert(nome(PACIENTE,PACIENTE)).
 insere_idade(PACIENTE,IDADE):- assert(idade(PACIENTE,IDADE)).
 insere_data_do_exame(PACIENTE, DATA_DO_EXAME) :- assert(data_do_exame(PACIENTE,DATA_DO_EXAME)).
 insere_tipo_da_consulta(PACIENTE,TIPO_DA_CONSULTA):- assert(tipo_da_consulta(PACIENTE,TIPO_DA_CONSULTA)).
@@ -35,12 +37,12 @@ insere_diagnostico(PACIENTE,DIAGNOSTICO) :- assert(diagnostico(PACIENTE,DIAGNOST
 
 cadastrar_paciente :-
 	perguntar_nome,
-	read(PACIENTE),
+	ler(PACIENTE),
 	perguntar_idade, read(IDADE),
 	perguntar_data_do_exame,
-	read(DATA_DO_EXAME),
+	ler(DATA_DO_EXAME),
 	perguntar_tipo_da_consulta,
-	read(TIPO_DA_CONSULTA),
+	ler(TIPO_DA_CONSULTA),
 	insere_nome(PACIENTE),
 	insere_idade(PACIENTE, IDADE),
 	insere_data_do_exame(PACIENTE, DATA_DO_EXAME),
@@ -66,7 +68,7 @@ menu :-
 	write('"cirurgia" para realizar uma cirurgia'), nl,
 	write('"sair" para Sair'), nl,
 	write('  '), nl,
-	read(Escolha),
+	ler(Escolha),
 	processa(Escolha).
 
 processa(Escolha) :-
