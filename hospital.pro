@@ -25,9 +25,9 @@ examinar:-
 sair :-
      write('Bye!').
 
-listar_pacientes :-
-	nome(X).
+listar_pacientes :- findall(Ex,nome(NOME,NOME),S).
 
+procura(Paciente) :- findall(Ex,exame(Paciente,Ex),S).
 insere_nome(PACIENTE):- assert(nome(PACIENTE,PACIENTE)).
 insere_idade(PACIENTE,IDADE):- assert(idade(PACIENTE,IDADE)).
 insere_data_do_exame(PACIENTE, DATA_DO_EXAME) :- assert(data_do_exame(PACIENTE,DATA_DO_EXAME)).
@@ -38,7 +38,8 @@ insere_diagnostico(PACIENTE,DIAGNOSTICO) :- assert(diagnostico(PACIENTE,DIAGNOST
 cadastrar_paciente :-
 	perguntar_nome,
 	ler(PACIENTE),
-	perguntar_idade, read(IDADE),
+	perguntar_idade,
+	ler(IDADE),
 	perguntar_data_do_exame,
 	ler(DATA_DO_EXAME),
 	perguntar_tipo_da_consulta,
@@ -57,6 +58,11 @@ cadastrar_paciente :-
 	listing(estado),
 	listing(diagnostico),
 	told.
+
+consulta :-
+	perguntar_nome,
+	ler(NOME),
+	procura(NOME).
 
 menu :-
 	carregar,
