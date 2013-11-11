@@ -28,7 +28,7 @@ sai :-
      write('Bye!').
 
 listar_pacientes :- findall(Ex,nome(_,Ex),S),!,
-	write(S).
+	write(S),nl,nl.
 
 procura(Paciente) :-
 
