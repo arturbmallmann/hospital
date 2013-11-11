@@ -19,7 +19,7 @@ tipo_da_consulta(artur, rotina).
 
 :- dynamic estado/2.
 
-estado(artur, x).
+estado(artur, grave).
 
 :- dynamic diagnostico/2.
 
@@ -27,5 +27,5 @@ diagnostico(artur, true).
 
 :- dynamic cirurgia/2.
 
-cirurgia(artur, true).
+cirurgia(artur, false).
 

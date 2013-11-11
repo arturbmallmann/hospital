@@ -17,6 +17,8 @@ perguntar_data_do_exame :-
 	write('Qual a data do exame? Ex: 25/12/2013'), nl.
 perguntar_tipo_da_consulta :-
 	write('Qual o tipo da consulta? (rotina ou circurgia)'), nl.
+perguntar_estado :-
+	write('Qual o estado de saúde?'),nl.
 
 examinar:-
 	perguntar_nome.
@@ -25,7 +27,7 @@ examinar:-
 sai :-
      write('Bye!').
 
-listar_pacientes :- findall(Ex,nome(_,Ex),S),
+listar_pacientes :- findall(Ex,nome(_,Ex),S),!,
 	write(S).
 
 procura(Paciente) :-
@@ -52,8 +54,14 @@ insere_tipo_da_consulta(PACIENTE,TIPO_DA_CONSULTA):- assert(tipo_da_consulta(PAC
 insere_estado(PACIENTE, ESTADO) :- assert(estado(PACIENTE,ESTADO)).
 insere_diagnostico(PACIENTE,DIAGNOSTICO) :- assert(diagnostico(PACIENTE,DIAGNOSTICO)).
 insere_cirurgia(PACIENTE,FEITA) :- assert(cirurgia(PACIENTE,FEITA)).
-exclui_cirurgia(PACIENTE) :- retract(cirurgia(PACIENTE,_)).
+
+exclui_nome(PACIENTE):- retract(nome(PACIENTE,PACIENTE)).
+exclui_idade(PACIENTE):- retract(idade(PACIENTE,_)).
+exclui_data_do_exame(PACIENTE) :- retract(data_do_exame(PACIENTE,_)).
+exclui_tipo_da_consulta(PACIENTE):- retract(tipo_da_consulta(PACIENTE,_)).
+exclui_estado(PACIENTE) :- retract(estado(PACIENTE,_)).
 exclui_diagnostico(PACIENTE) :- retract(diagnostico(PACIENTE,_)).
+exclui_cirurgia(PACIENTE) :- retract(cirurgia(PACIENTE,_)).
 
 atualiza :-
 	tell('dados'),
@@ -101,17 +109,33 @@ fazer_diagnostivo :-
 	ler(NOME),
 	exclui_diagnostico(NOME),
 	insere_diagnostico(NOME,'true'),
+	perguntar_estado,
+	ler(ESTADO),
+	exclui_estado(NOME),
+	insere_estado(NOME,ESTADO),
 	atualiza.
 
+dar_alta :-
+	perguntar_nome,
+	ler(NOME),
+	exclui_nome(NOME),
+	exclui_idade(NOME),
+	exclui_data_do_exame(NOME),
+	exclui_tipo_da_consulta(NOME),
+	exclui_estado(NOME),
+	exclui_diagnostico(NOME),
+	exclui_cirurgia(NOME),
+	atualiza.		
+	
 
 menu :-
-	carregar,
 	write('----   Operações    ----'),nl,nl,
 	write('"listar" para listar todos os pacientes'), nl,
 	write('"consultar" para encontrar um paciente pelo nome'), nl,
 	write('"cadastrar" para cadastrar um paciente'), nl,
 	write('"examinar" para examinar um paciente'), nl,
 	write('"cirurgia" para realizar uma cirurgia'), nl,
+	write('"alta" para dar alta'),nl,
 	write('"sair" para Sair'), nl,
 	write('  '), nl,
 	ler(Escolha),
@@ -123,7 +147,8 @@ processa(Escolha) :-
 	Escolha==listar -> listar_pacientes,menu;
 	Escolha==cirurgia -> fazer_cirurgia,menu;
 	Escolha==examinar -> fazer_diagnostivo,menu;
+	Escolha==alta -> dar_alta,menu;
 	Escolha==sair -> sai.
 
-
+:-carregar.
 :-menu. %chama o menu principal pela primeira vez
